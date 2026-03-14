@@ -479,12 +479,20 @@ export default function POSInput() {
                             <span className="text-2xl font-black text-emerald-700">{formatIDR(receiptData.grandTotal)}</span>
                         </div>
 
-                        <button
-                            onClick={() => setReceiptData(null)}
-                            className="mt-10 w-full border-2 border-slate-200 text-slate-600 font-bold py-3 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-[0.98]"
-                        >
-                            SELESAI & TUTUP
-                        </button>
+                        <div className="mt-10 flex gap-4 print:hidden">
+                            <button
+                                onClick={() => window.print()}
+                                className="flex-1 bg-emerald-600 text-white font-bold py-3 rounded-xl shadow-lg hover:bg-emerald-700 transition-all active:scale-[0.98]"
+                            >
+                                🖨️ CETAK BUKTI
+                            </button>
+                            <button
+                                onClick={() => setReceiptData(null)}
+                                className="flex-1 border-2 border-slate-200 text-slate-600 font-bold py-3 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-[0.98]"
+                            >
+                                SELESAI
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
