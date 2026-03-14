@@ -7,7 +7,6 @@ export default function POSInput() {
     const [selectedHorse, setSelectedHorse] = useState(null);
 
     const products = [
-    const products = [
         {
             id: 1,
             name: 'Kuda Arab (Purebred)',
@@ -138,7 +137,6 @@ export default function POSInput() {
                 note: 'Pola bintik unik seperti macan tutul.'
             }
         },
-    ];
     ];
 
     useEffect(() => {
