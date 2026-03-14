@@ -13,10 +13,19 @@ export default function POSInput() {
         async function fetchHorses() {
             try {
                 const response = await fetch('/api/horses');
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
                 const data = await response.json();
-                setProducts(data);
+                if (Array.isArray(data)) {
+                    setProducts(data);
+                } else {
+                    console.error("Format data API tidak sesuai:", data);
+                    setProducts([]);
+                }
             } catch (error) {
-                console.error("Failed to fetch horses from database", error);
+                console.error("Gagal mengambil data kuda dari database", error);
+                setProducts([]);
             } finally {
                 setLoading(false);
             }
@@ -139,7 +148,7 @@ export default function POSInput() {
             </main>
 
             {/* Checkout Sidebar */}
-            < aside className="w-96 bg-white border-l border-slate-200 flex flex-col shadow-2xl" >
+            <aside className="w-96 bg-white border-l border-slate-200 flex flex-col shadow-2xl">
                 <div className="p-6 border-b border-slate-100">
                     <h2 className="text-lg font-bold">Ringkasan Transaksi</h2>
                     <div className="flex mt-2 space-x-2">
