@@ -6,148 +6,23 @@ export default function POSInput() {
     const [total, setTotal] = useState(0);
     const [selectedHorse, setSelectedHorse] = useState(null);
 
-    const products = [
-        {
-            id: 1,
-            name: 'Kuda Arab (Purebred)',
-            price: 75000000,
-            category: 'Premium',
-            image: 'https://images.unsplash.com/photo-1553531384-397c80973a0b?auto=format&fit=crop&q=80&w=800',
-            details: {
-                certId: 'SY-AR-2024-001',
-                vaccines: ['AIE (Jan 2024)', 'Influenza (Dec 2023)'],
-                health: 'Sangat Sehat (Grade A)',
-                origin: 'Arab Saudi',
-                note: 'Telah diaudit kemurnian nasabnya.'
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchHorses() {
+            try {
+                const response = await fetch('/api/horses');
+                const data = await response.json();
+                setProducts(data);
+            } catch (error) {
+                console.error("Failed to fetch horses from database", error);
+            } finally {
+                setLoading(false);
             }
-        },
-        {
-            id: 2,
-            name: 'Kuda Pony (Schooling)',
-            price: 25000000,
-            category: 'Edukasi',
-            image: 'https://images.unsplash.com/photo-1566251037376-745ab02462bb?auto=format&fit=crop&q=80&w=800',
-            details: {
-                certId: 'SY-PN-2024-012',
-                vaccines: ['Tetanus (Feb 2024)'],
-                health: 'Sehat (Grade B)',
-                origin: 'Sumbawa',
-                note: 'Cocok untuk latihan berkuda anak-anak Syariah.'
-            }
-        },
-        {
-            id: 3,
-            name: 'Kuda Sandelwood',
-            price: 45000000,
-            category: 'Lokal Unggul',
-            image: 'https://images.unsplash.com/photo-1598974357801-cbca100e65d3?auto=format&fit=crop&q=80&w=800',
-            details: {
-                certId: 'SY-SW-2024-045',
-                vaccines: ['Influenza (Jan 2024)', 'Rabies (Nov 2023)'],
-                health: 'Sangat Sehat (Grade A)',
-                origin: 'Sumba',
-                note: 'Turunan unggul, lari sangat cepat dan stabil.'
-            }
-        },
-        {
-            id: 4,
-            name: 'Kuda Akhal-Teke',
-            price: 120000000,
-            category: 'Premium/Koleksi',
-            image: 'https://images.unsplash.com/photo-1553440569-bfc1073dc4b2?auto=format&fit=crop&q=80&w=800',
-            details: {
-                certId: 'SY-AK-2024-009',
-                vaccines: ['AIE (Mar 2024)', 'West Nile (Jan 2024)'],
-                health: 'Sangat Sehat (Grade A+)',
-                origin: 'Turkmenistan',
-                note: 'Kuda dengan bulu berkilau metalik, sangat langka.'
-            }
-        },
-        {
-            id: 5,
-            name: 'Kuda Friesian',
-            price: 95000000,
-            category: 'Elegan',
-            image: 'https://images.unsplash.com/photo-1517488629431-6427e0ee1e5f?auto=format&fit=crop&q=80&w=800',
-            details: {
-                certId: 'SY-FR-2024-022',
-                vaccines: ['AIE (Feb 2024)', 'Tetanus (Dec 2023)'],
-                health: 'Sangat Sehat (Grade A)',
-                origin: 'Belanda',
-                note: 'Kuda hitam gagah dengan bulu kaki yang indah.'
-            }
-        },
-        {
-            id: 6,
-            name: 'Kuda Marwari',
-            price: 65000000,
-            category: 'Unik',
-            image: 'https://images.unsplash.com/photo-1544498522-421de72c9183?auto=format&fit=crop&q=80&w=800',
-            details: {
-                certId: 'SY-MR-2024-033',
-                vaccines: ['Influenza (Feb 2024)', 'Rabies (Jan 2024)'],
-                health: 'Sangat Sehat (Grade A)',
-                origin: 'India',
-                note: 'Ciri khas telinga yang melengkung ke dalam.'
-            }
-        },
-        {
-            id: 7,
-            name: 'Kuda Morgan',
-            price: 55000000,
-            category: 'Serbaguna',
-            image: 'https://images.unsplash.com/photo-1549646875-1eec5b93dcc3?auto=format&fit=crop&q=80&w=800',
-            details: {
-                certId: 'SY-MG-2024-015',
-                vaccines: ['AIE (Jan 2024)', 'Rabies (Feb 2024)'],
-                health: 'Sehat (Grade B+)',
-                origin: 'Amerika',
-                note: 'Kuda yang sangat patuh dan ramah.'
-            }
-        },
-        {
-            id: 8,
-            name: 'Kuda Thoroughbred',
-            price: 85000000,
-            category: 'Balap',
-            image: 'https://images.unsplash.com/photo-1498855926480-d98e83099315?auto=format&fit=crop&q=80&w=800',
-            details: {
-                certId: 'SY-TB-2024-067',
-                vaccines: ['Influenza (Mar 2024)', 'AIE (Dec 2023)'],
-                health: 'Atletis (Grade A)',
-                origin: 'Inggris',
-                note: 'Sangat cepat, cocok untuk olahraga berkuda.'
-            }
-        },
-        {
-            id: 9,
-            name: 'Kuda Clydesdale',
-            price: 110000000,
-            category: 'Pekerja/Besar',
-            image: 'https://images.unsplash.com/photo-1589133852281-0814421b5be7?auto=format&fit=crop&q=80&w=800',
-            details: {
-                certId: 'SY-CL-2024-004',
-                vaccines: ['Tetanus (Jan 2024)', 'AIE (Feb 2024)'],
-                health: 'Kuat (Grade A)',
-                origin: 'Skotlandia',
-                note: 'Ukuran raksasa, sangat tenang dan bertenaga.'
-            }
-        },
-        {
-            id: 10,
-            name: 'Kuda Appaloosa',
-            price: 40000000,
-            category: 'Eksotis',
-            image: 'https://images.unsplash.com/photo-1558966524-7eb3e25b1f9b?auto=format&fit=crop&q=80&w=800',
-            details: {
-                certId: 'SY-AP-2024-088',
-                vaccines: ['Influenza (Feb 2024)', 'Rabies (Dec 2023)'],
-                health: 'Sehat (Grade B+)',
-                origin: 'Amerika',
-                note: 'Pola bintik unik seperti macan tutul.'
-            }
-        },
-    ];
+        }
+        fetchHorses();
+    }, []);
 
     useEffect(() => {
         const newTotal = cart.reduce((acc, item) => acc + item.price, 0);
@@ -174,23 +49,42 @@ export default function POSInput() {
         setShowCheckoutModal(true);
     };
 
-    const processPayment = (e) => {
+    const processPayment = async (e) => {
         e.preventDefault();
         if (!checkoutForm.agree) return alert('Harap setujui Akad Jual Beli Syariah');
 
-        setReceiptData({
-            buyer: checkoutForm,
-            items: [...cart],
-            total: total,
-            zakat: calculateZakat(total),
-            grandTotal: total + calculateZakat(total),
-            date: new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
-            transactionId: 'TRX-' + Math.floor(Math.random() * 1000000)
-        });
+        try {
+            const payload = {
+                buyer: checkoutForm,
+                items: [...cart],
+                total: total,
+                zakat: calculateZakat(total),
+                grandTotal: total + calculateZakat(total),
+            };
 
-        setShowCheckoutModal(false);
-        setCart([]);
-        setCheckoutForm({ name: '', address: '', method: 'Transfer BSI', agree: false });
+            const response = await fetch('/api/transactions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) throw new Error('Transaction failed');
+
+            const data = await response.json();
+
+            setReceiptData({
+                ...payload,
+                date: new Date(data.transaction.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+                transactionId: data.transaction.id
+            });
+
+            setShowCheckoutModal(false);
+            setCart([]);
+            setCheckoutForm({ name: '', address: '', method: 'Transfer BSI', agree: false });
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Mohon maaf, terjadi kesalahan saat memproses akad.');
+        }
     };
 
     return (
@@ -211,35 +105,41 @@ export default function POSInput() {
                     </div>
                 </header>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {products.map((p) => (
-                        <div key={p.id}
-                            className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all cursor-pointer active:scale-[0.98] group"
-                            onClick={() => setSelectedHorse(p)}
-                        >
-                            <div className="h-40 bg-slate-100 rounded-xl mb-4 flex items-center justify-center text-slate-400 group-hover:bg-emerald-50 transition-colors overflow-hidden">
-                                {p.image ? (
-                                    <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                ) : (
-                                    <span className="text-4xl">🐎</span>
-                                )}
-                            </div>
+                {loading ? (
+                    <div className="flex justify-center items-center h-64 w-full">
+                        <p className="text-xl font-bold text-slate-500 animate-pulse">Memuat Data Kuda Syariah...</p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {products.map((p) => (
+                            <div key={p.id}
+                                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all cursor-pointer active:scale-[0.98] group"
+                                onClick={() => setSelectedHorse(p)}
+                            >
+                                <div className="h-40 bg-slate-100 rounded-xl mb-4 flex items-center justify-center text-slate-400 group-hover:bg-emerald-50 transition-colors overflow-hidden">
+                                    {p.image ? (
+                                        <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                    ) : (
+                                        <span className="text-4xl">🐎</span>
+                                    )}
+                                </div>
 
-                            <h3 className="font-bold text-slate-800 text-lg">{p.name}</h3>
-                            <p className="text-xs text-slate-500 mb-4">{p.category}</p>
-                            <div className="flex justify-between items-center">
-                                <p className="text-emerald-600 font-black text-xl">{formatIDR(p.price)}</p>
-                                <button className="bg-slate-100 p-2 rounded-lg text-slate-400 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                                    Detail
-                                </button>
+                                <h3 className="font-bold text-slate-800 text-lg">{p.name}</h3>
+                                <p className="text-xs text-slate-500 mb-4">{p.category}</p>
+                                <div className="flex justify-between items-center">
+                                    <p className="text-emerald-600 font-black text-xl">{formatIDR(p.price)}</p>
+                                    <button className="bg-slate-100 p-2 rounded-lg text-slate-400 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                                        Detail
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
             </main>
 
             {/* Checkout Sidebar */}
-            <aside className="w-96 bg-white border-l border-slate-200 flex flex-col shadow-2xl">
+            < aside className="w-96 bg-white border-l border-slate-200 flex flex-col shadow-2xl" >
                 <div className="p-6 border-b border-slate-100">
                     <h2 className="text-lg font-bold">Ringkasan Transaksi</h2>
                     <div className="flex mt-2 space-x-2">
@@ -293,209 +193,215 @@ export default function POSInput() {
                         "Setiap transaksi telah menyisihkan zakat perniagaan."
                     </p>
                 </div>
-            </aside>
+            </aside >
 
             {/* Horse Detail Modal */}
-            {selectedHorse && (
-                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-                    <div className="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden border border-emerald-100">
-                        <div className="p-8">
-                            <div className="flex justify-between items-start mb-6">
-                                <div>
-                                    <h2 className="text-2xl font-black text-slate-800">{selectedHorse.name}</h2>
-                                    <p className="text-emerald-600 font-bold uppercase text-xs tracking-widest">{selectedHorse.category}</p>
+            {
+                selectedHorse && (
+                    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+                        <div className="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden border border-emerald-100">
+                            <div className="p-8">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div>
+                                        <h2 className="text-2xl font-black text-slate-800">{selectedHorse.name}</h2>
+                                        <p className="text-emerald-600 font-bold uppercase text-xs tracking-widest">{selectedHorse.category}</p>
+                                    </div>
+                                    <button onClick={() => setSelectedHorse(null)} className="text-slate-300 hover:text-slate-500 text-2xl font-light">&times;</button>
                                 </div>
-                                <button onClick={() => setSelectedHorse(null)} className="text-slate-300 hover:text-slate-500 text-2xl font-light">&times;</button>
-                            </div>
 
-                            <div className="space-y-4">
-                                <section className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mb-1">ID Sertifikat Syariah</p>
-                                    <p className="font-mono text-sm font-bold text-slate-700">{selectedHorse.details.certId}</p>
-                                </section>
-
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-4">
                                     <section className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mb-1">Status Kesehatan</p>
-                                        <p className="text-sm font-bold text-emerald-600">{selectedHorse.details.health}</p>
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mb-1">ID Sertifikat Syariah</p>
+                                        <p className="font-mono text-sm font-bold text-slate-700">{selectedHorse.details.certId}</p>
                                     </section>
-                                    <section className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mb-1">Asal Hewan</p>
-                                        <p className="text-sm font-bold text-slate-700">{selectedHorse.details.origin}</p>
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <section className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mb-1">Status Kesehatan</p>
+                                            <p className="text-sm font-bold text-emerald-600">{selectedHorse.details.health}</p>
+                                        </section>
+                                        <section className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mb-1">Asal Hewan</p>
+                                            <p className="text-sm font-bold text-slate-700">{selectedHorse.details.origin}</p>
+                                        </section>
+                                    </div>
+
+                                    <section className="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                                        <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-tighter mb-1">Riwayat Vaksinasi</p>
+                                        <ul className="text-xs font-semibold text-emerald-800 space-y-1">
+                                            {selectedHorse.details.vaccines.map((v, i) => (
+                                                <li key={i}>✓ {v}</li>
+                                            ))}
+                                        </ul>
                                     </section>
-                                </div>
 
-                                <section className="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
-                                    <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-tighter mb-1">Riwayat Vaksinasi</p>
-                                    <ul className="text-xs font-semibold text-emerald-800 space-y-1">
-                                        {selectedHorse.details.vaccines.map((v, i) => (
-                                            <li key={i}>✓ {v}</li>
-                                        ))}
-                                    </ul>
-                                </section>
-
-                                <p className="text-xs text-slate-500 italic leading-relaxed text-center py-2 px-4 italic">
-                                    "{selectedHorse.details.note}"
-                                </p>
-                            </div>
-
-                            <button
-                                onClick={() => addToCart(selectedHorse)}
-                                className="w-full bg-slate-900 text-white font-bold py-4 rounded-xl mt-6 hover:bg-slate-800 transition-all active:scale-[0.98]"
-                            >
-                                TAMBAHKAN KE AKAD
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Checkout Form Modal */}
-            {showCheckoutModal && (
-                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
-                    <div className="bg-white w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden border border-emerald-100 my-8">
-                        <div className="p-8">
-                            <div className="flex justify-between items-start mb-6">
-                                <div>
-                                    <h2 className="text-2xl font-black text-slate-800">Formulir Pembeli</h2>
-                                    <p className="text-slate-500 text-sm italic">"Lengkapi data untuk akad jual beli"</p>
-                                </div>
-                                <button onClick={() => setShowCheckoutModal(false)} className="text-slate-300 hover:text-slate-500 text-2xl font-light">&times;</button>
-                            </div>
-
-                            <form onSubmit={processPayment} className="space-y-5">
-                                <div>
-                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Nama Pembeli Lengkap</label>
-                                    <input
-                                        type="text" required
-                                        value={checkoutForm.name}
-                                        onChange={(e) => setCheckoutForm({ ...checkoutForm, name: e.target.value })}
-                                        className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-slate-800 font-semibold"
-                                        placeholder="Cth: Budi Santoso"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Alamat Pengiriman/Kandang</label>
-                                    <textarea required rows="3"
-                                        value={checkoutForm.address}
-                                        onChange={(e) => setCheckoutForm({ ...checkoutForm, address: e.target.value })}
-                                        className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-slate-800"
-                                        placeholder="Alamat lengkap pengiriman kuda..."
-                                    ></textarea>
-                                </div>
-
-                                <div>
-                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Metode Pembayaran Syariah</label>
-                                    <select
-                                        value={checkoutForm.method}
-                                        onChange={(e) => setCheckoutForm({ ...checkoutForm, method: e.target.value })}
-                                        className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-semibold text-slate-700"
-                                    >
-                                        <option value="Transfer BSI">Bank Syariah Indonesia (BSI)</option>
-                                        <option value="Transfer Muamalat">Bank Muamalat</option>
-                                        <option value="Tunai/COD (Khusus Jabodetabek)">Tunai/COD (Khusus Jabodetabek)</option>
-                                    </select>
-                                </div>
-
-                                <div className="p-5 bg-emerald-50 rounded-xl border border-emerald-100 flex gap-4 items-start mt-4">
-                                    <input
-                                        type="checkbox" required id="akad-agree"
-                                        checked={checkoutForm.agree}
-                                        onChange={(e) => setCheckoutForm({ ...checkoutForm, agree: e.target.checked })}
-                                        className="mt-1 w-5 h-5 text-emerald-600 rounded focus:ring-emerald-500"
-                                    />
-                                    <label htmlFor="akad-agree" className="text-sm font-medium text-emerald-900 leading-relaxed cursor-pointer">
-                                        Saya bersumpah mewakili akad bahwa pembelian ini bebas riba, dilakukan dengan sadar, dan bersedia membayarkan <strong>Infaq/Zakat Jual Beli 2.5%</strong>.
-                                    </label>
+                                    <p className="text-xs text-slate-500 italic leading-relaxed text-center py-2 px-4 italic">
+                                        "{selectedHorse.details.note}"
+                                    </p>
                                 </div>
 
                                 <button
-                                    type="submit"
-                                    className="w-full bg-emerald-600 text-white font-black py-4 rounded-xl shadow-lg shadow-emerald-200 hover:bg-emerald-700 active:scale-[0.98] transition-all mt-6 text-lg tracking-wide"
+                                    onClick={() => addToCart(selectedHorse)}
+                                    className="w-full bg-slate-900 text-white font-bold py-4 rounded-xl mt-6 hover:bg-slate-800 transition-all active:scale-[0.98]"
                                 >
-                                    SAHKAN TRANSAKSI
+                                    TAMBAHKAN KE AKAD
                                 </button>
-                            </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
+
+            {/* Checkout Form Modal */}
+            {
+                showCheckoutModal && (
+                    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
+                        <div className="bg-white w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden border border-emerald-100 my-8">
+                            <div className="p-8">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div>
+                                        <h2 className="text-2xl font-black text-slate-800">Formulir Pembeli</h2>
+                                        <p className="text-slate-500 text-sm italic">"Lengkapi data untuk akad jual beli"</p>
+                                    </div>
+                                    <button onClick={() => setShowCheckoutModal(false)} className="text-slate-300 hover:text-slate-500 text-2xl font-light">&times;</button>
+                                </div>
+
+                                <form onSubmit={processPayment} className="space-y-5">
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Nama Pembeli Lengkap</label>
+                                        <input
+                                            type="text" required
+                                            value={checkoutForm.name}
+                                            onChange={(e) => setCheckoutForm({ ...checkoutForm, name: e.target.value })}
+                                            className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-slate-800 font-semibold"
+                                            placeholder="Cth: Budi Santoso"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Alamat Pengiriman/Kandang</label>
+                                        <textarea required rows="3"
+                                            value={checkoutForm.address}
+                                            onChange={(e) => setCheckoutForm({ ...checkoutForm, address: e.target.value })}
+                                            className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-slate-800"
+                                            placeholder="Alamat lengkap pengiriman kuda..."
+                                        ></textarea>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Metode Pembayaran Syariah</label>
+                                        <select
+                                            value={checkoutForm.method}
+                                            onChange={(e) => setCheckoutForm({ ...checkoutForm, method: e.target.value })}
+                                            className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-semibold text-slate-700"
+                                        >
+                                            <option value="Transfer BSI">Bank Syariah Indonesia (BSI)</option>
+                                            <option value="Transfer Muamalat">Bank Muamalat</option>
+                                            <option value="Tunai/COD (Khusus Jabodetabek)">Tunai/COD (Khusus Jabodetabek)</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="p-5 bg-emerald-50 rounded-xl border border-emerald-100 flex gap-4 items-start mt-4">
+                                        <input
+                                            type="checkbox" required id="akad-agree"
+                                            checked={checkoutForm.agree}
+                                            onChange={(e) => setCheckoutForm({ ...checkoutForm, agree: e.target.checked })}
+                                            className="mt-1 w-5 h-5 text-emerald-600 rounded focus:ring-emerald-500"
+                                        />
+                                        <label htmlFor="akad-agree" className="text-sm font-medium text-emerald-900 leading-relaxed cursor-pointer">
+                                            Saya bersumpah mewakili akad bahwa pembelian ini bebas riba, dilakukan dengan sadar, dan bersedia membayarkan <strong>Infaq/Zakat Jual Beli 2.5%</strong>.
+                                        </label>
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-emerald-600 text-white font-black py-4 rounded-xl shadow-lg shadow-emerald-200 hover:bg-emerald-700 active:scale-[0.98] transition-all mt-6 text-lg tracking-wide"
+                                    >
+                                        SAHKAN TRANSAKSI
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
 
             {/* Success Receipt Modal */}
-            {receiptData && (
-                <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4 z-50 overflow-y-auto">
-                    <div className="bg-white w-full max-w-md rounded-xl shadow-2xl border border-slate-200 p-8 my-8 relative printable-area">
-                        {/* Decorative top border */}
-                        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-t-xl"></div>
+            {
+                receiptData && (
+                    <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4 z-50 overflow-y-auto">
+                        <div className="bg-white w-full max-w-md rounded-xl shadow-2xl border border-slate-200 p-8 my-8 relative printable-area">
+                            {/* Decorative top border */}
+                            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-t-xl"></div>
 
-                        <div className="text-center mb-6 pt-4">
-                            <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="text-3xl font-bold">✓</span>
-                            </div>
-                            <h2 className="text-2xl font-black text-slate-800 uppercase tracking-widest">BUKTI AKAD</h2>
-                            <p className="text-slate-500 text-xs italic">"Pasar Kuda Syariah - Amanah & Terpercaya"</p>
-                            <p className="text-[10px] text-slate-400 mt-2 font-mono">{receiptData.transactionId} &bull; {receiptData.date}</p>
-                        </div>
-
-                        <div className="border-t border-dashed border-slate-300 py-4 my-2 text-sm text-slate-700 space-y-2">
-                            <div className="flex justify-between">
-                                <span className="text-slate-500">Nama Pembeli:</span>
-                                <span className="font-bold text-right">{receiptData.buyer.name}</span>
-                            </div>
-                            <div className="flex justify-between items-start">
-                                <span className="text-slate-500 mr-4">Kirim ke:</span>
-                                <span className="font-bold text-right text-xs leading-tight">{receiptData.buyer.address}</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span className="text-slate-500">Pembayaran:</span>
-                                <span className="font-bold text-right">{receiptData.buyer.method}</span>
-                            </div>
-                        </div>
-
-                        <div className="border-t border-b border-dashed border-slate-300 py-4 my-2 space-y-3">
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Daftar Hewan</p>
-                            {receiptData.items.map((item, idx) => (
-                                <div key={idx} className="flex justify-between items-center text-sm font-semibold text-slate-800">
-                                    <span>{item.name}</span>
-                                    <span>{formatIDR(item.price)}</span>
+                            <div className="text-center mb-6 pt-4">
+                                <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <span className="text-3xl font-bold">✓</span>
                                 </div>
-                            ))}
-                        </div>
-
-                        <div className="py-4 space-y-2">
-                            <div className="flex justify-between text-sm text-slate-600">
-                                <span>Subtotal Harga Pokok</span>
-                                <span>{formatIDR(receiptData.total)}</span>
+                                <h2 className="text-2xl font-black text-slate-800 uppercase tracking-widest">BUKTI AKAD</h2>
+                                <p className="text-slate-500 text-xs italic">"Pasar Kuda Syariah - Amanah & Terpercaya"</p>
+                                <p className="text-[10px] text-slate-400 mt-2 font-mono">{receiptData.transactionId} &bull; {receiptData.date}</p>
                             </div>
-                            <div className="flex justify-between text-sm font-bold text-emerald-600">
-                                <span>Infaq/Zakat Jual Beli (2.5%)</span>
-                                <span>+ {formatIDR(receiptData.zakat)}</span>
+
+                            <div className="border-t border-dashed border-slate-300 py-4 my-2 text-sm text-slate-700 space-y-2">
+                                <div className="flex justify-between">
+                                    <span className="text-slate-500">Nama Pembeli:</span>
+                                    <span className="font-bold text-right">{receiptData.buyer.name}</span>
+                                </div>
+                                <div className="flex justify-between items-start">
+                                    <span className="text-slate-500 mr-4">Kirim ke:</span>
+                                    <span className="font-bold text-right text-xs leading-tight">{receiptData.buyer.address}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-slate-500">Pembayaran:</span>
+                                    <span className="font-bold text-right">{receiptData.buyer.method}</span>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="border-t-4 border-slate-800 pt-4 mt-2 flex justify-between items-baseline">
-                            <span className="font-black text-slate-800 uppercase">TOTAL DIBAYAR</span>
-                            <span className="text-2xl font-black text-emerald-700">{formatIDR(receiptData.grandTotal)}</span>
-                        </div>
+                            <div className="border-t border-b border-dashed border-slate-300 py-4 my-2 space-y-3">
+                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Daftar Hewan</p>
+                                {receiptData.items.map((item, idx) => (
+                                    <div key={idx} className="flex justify-between items-center text-sm font-semibold text-slate-800">
+                                        <span>{item.name}</span>
+                                        <span>{formatIDR(item.price)}</span>
+                                    </div>
+                                ))}
+                            </div>
 
-                        <div className="mt-10 flex gap-4 print:hidden">
-                            <button
-                                onClick={() => window.print()}
-                                className="flex-1 bg-emerald-600 text-white font-bold py-3 rounded-xl shadow-lg hover:bg-emerald-700 transition-all active:scale-[0.98]"
-                            >
-                                🖨️ CETAK BUKTI
-                            </button>
-                            <button
-                                onClick={() => setReceiptData(null)}
-                                className="flex-1 border-2 border-slate-200 text-slate-600 font-bold py-3 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-[0.98]"
-                            >
-                                SELESAI
-                            </button>
+                            <div className="py-4 space-y-2">
+                                <div className="flex justify-between text-sm text-slate-600">
+                                    <span>Subtotal Harga Pokok</span>
+                                    <span>{formatIDR(receiptData.total)}</span>
+                                </div>
+                                <div className="flex justify-between text-sm font-bold text-emerald-600">
+                                    <span>Infaq/Zakat Jual Beli (2.5%)</span>
+                                    <span>+ {formatIDR(receiptData.zakat)}</span>
+                                </div>
+                            </div>
+
+                            <div className="border-t-4 border-slate-800 pt-4 mt-2 flex justify-between items-baseline">
+                                <span className="font-black text-slate-800 uppercase">TOTAL DIBAYAR</span>
+                                <span className="text-2xl font-black text-emerald-700">{formatIDR(receiptData.grandTotal)}</span>
+                            </div>
+
+                            <div className="mt-10 flex gap-4 print:hidden">
+                                <button
+                                    onClick={() => window.print()}
+                                    className="flex-1 bg-emerald-600 text-white font-bold py-3 rounded-xl shadow-lg hover:bg-emerald-700 transition-all active:scale-[0.98]"
+                                >
+                                    🖨️ CETAK BUKTI
+                                </button>
+                                <button
+                                    onClick={() => setReceiptData(null)}
+                                    className="flex-1 border-2 border-slate-200 text-slate-600 font-bold py-3 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-[0.98]"
+                                >
+                                    SELESAI
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 }
