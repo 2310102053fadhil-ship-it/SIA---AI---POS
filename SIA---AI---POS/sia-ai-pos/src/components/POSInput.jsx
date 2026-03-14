@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 
 export default function POSInput() {
+    const [cart, setCart] = useState([]);
+    const [total, setTotal] = useState(0);
     const [selectedHorse, setSelectedHorse] = useState(null);
 
     const products = [
