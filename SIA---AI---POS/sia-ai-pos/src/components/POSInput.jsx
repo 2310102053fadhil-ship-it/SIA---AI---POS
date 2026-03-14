@@ -8,8 +8,10 @@ export default function POSInput() {
     const products = [
         { id: 1, name: 'Kurma Ajwa 500g', price: 125000, category: 'Makanan' },
         { id: 2, name: 'Madu Murni 1kg', price: 210000, category: 'Minuman' },
-        { id: 3, name: 'Habbatussauda Caps', price: 85000, category: 'Suplemen' },
-        { id: 4, name: 'Air Zam-Zam 1L', price: 45000, category: 'Minuman' },
+        { id: 3, name: 'Kuda Arab (Purebred)', price: 75000000, category: 'Hewan/Hobi' },
+        { id: 4, name: 'Kuda Pony (Schooling)', price: 25000000, category: 'Hewan/Hobi' },
+        { id: 5, name: 'Kuda Sandelwood', price: 45000000, category: 'Hewan/Hobi' },
+        { id: 6, name: 'Air Zam-Zam 1L', price: 45000, category: 'Minuman' },
     ];
 
     useEffect(() => {
