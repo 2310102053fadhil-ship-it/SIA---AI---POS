@@ -7,11 +7,12 @@ export default function POSInput() {
     const [selectedHorse, setSelectedHorse] = useState(null);
 
     const products = [
+    const products = [
         {
             id: 1,
             name: 'Kuda Arab (Purebred)',
             price: 75000000,
-            category: 'Hewan/Hobi',
+            category: 'Premium',
             details: {
                 certId: 'SY-AR-2024-001',
                 vaccines: ['AIE (Jan 2024)', 'Influenza (Dec 2023)'],
@@ -24,7 +25,7 @@ export default function POSInput() {
             id: 2,
             name: 'Kuda Pony (Schooling)',
             price: 25000000,
-            category: 'Hewan/Hobi',
+            category: 'Edukasi',
             details: {
                 certId: 'SY-PN-2024-012',
                 vaccines: ['Tetanus (Feb 2024)'],
@@ -37,7 +38,7 @@ export default function POSInput() {
             id: 3,
             name: 'Kuda Sandelwood',
             price: 45000000,
-            category: 'Hewan/Hobi',
+            category: 'Lokal Unggul',
             details: {
                 certId: 'SY-SW-2024-045',
                 vaccines: ['Influenza (Jan 2024)', 'Rabies (Nov 2023)'],
@@ -46,6 +47,98 @@ export default function POSInput() {
                 note: 'Turunan unggul, lari sangat cepat dan stabil.'
             }
         },
+        {
+            id: 4,
+            name: 'Kuda Akhal-Teke',
+            price: 120000000,
+            category: 'Premium/Koleksi',
+            details: {
+                certId: 'SY-AK-2024-009',
+                vaccines: ['AIE (Mar 2024)', 'West Nile (Jan 2024)'],
+                health: 'Sangat Sehat (Grade A+)',
+                origin: 'Turkmenistan',
+                note: 'Kuda dengan bulu berkilau metalik, sangat langka.'
+            }
+        },
+        {
+            id: 5,
+            name: 'Kuda Friesian',
+            price: 95000000,
+            category: 'Elegan',
+            details: {
+                certId: 'SY-FR-2024-022',
+                vaccines: ['AIE (Feb 2024)', 'Tetanus (Dec 2023)'],
+                health: 'Sangat Sehat (Grade A)',
+                origin: 'Belanda',
+                note: 'Kuda hitam gagah dengan bulu kaki yang indah.'
+            }
+        },
+        {
+            id: 6,
+            name: 'Kuda Marwari',
+            price: 65000000,
+            category: 'Unik',
+            details: {
+                certId: 'SY-MR-2024-033',
+                vaccines: ['Influenza (Feb 2024)', 'Rabies (Jan 2024)'],
+                health: 'Sangat Sehat (Grade A)',
+                origin: 'India',
+                note: 'Ciri khas telinga yang melengkung ke dalam.'
+            }
+        },
+        {
+            id: 7,
+            name: 'Kuda Morgan',
+            price: 55000000,
+            category: 'Serbaguna',
+            details: {
+                certId: 'SY-MG-2024-015',
+                vaccines: ['AIE (Jan 2024)', 'Rabies (Feb 2024)'],
+                health: 'Sehat (Grade B+)',
+                origin: 'Amerika',
+                note: 'Kuda yang sangat patuh dan ramah.'
+            }
+        },
+        {
+            id: 8,
+            name: 'Kuda Thoroughbred',
+            price: 85000000,
+            category: 'Balap',
+            details: {
+                certId: 'SY-TB-2024-067',
+                vaccines: ['Influenza (Mar 2024)', 'AIE (Dec 2023)'],
+                health: 'Atletis (Grade A)',
+                origin: 'Inggris',
+                note: 'Sangat cepat, cocok untuk olahraga berkuda.'
+            }
+        },
+        {
+            id: 9,
+            name: 'Kuda Clydesdale',
+            price: 110000000,
+            category: 'Pekerja/Besar',
+            details: {
+                certId: 'SY-CL-2024-004',
+                vaccines: ['Tetanus (Jan 2024)', 'AIE (Feb 2024)'],
+                health: 'Kuat (Grade A)',
+                origin: 'Skotlandia',
+                note: 'Ukuran raksasa, sangat tenang dan bertenaga.'
+            }
+        },
+        {
+            id: 10,
+            name: 'Kuda Appaloosa',
+            price: 40000000,
+            category: 'Eksotis',
+            details: {
+                certId: 'SY-AP-2024-088',
+                vaccines: ['Influenza (Feb 2024)', 'Rabies (Dec 2023)'],
+                health: 'Sehat (Grade B+)',
+                origin: 'Amerika',
+                note: 'Pola bintik unik seperti macan tutul.'
+            }
+        },
+    ];
     ];
 
     useEffect(() => {
